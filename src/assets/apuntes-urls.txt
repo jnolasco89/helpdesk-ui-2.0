@@ -1,0 +1,16 @@
+https://vuetifyjs.com/
+https://router.vuejs.org/
+https://www.npmjs.com/package/vue-axios
+https://vuex.vuejs.org/
+https://baianat.github.io/vee-validate/guide/
+https://www.npmjs.com/package/v-mask
+
+Desinstalar modulos en npm: 
+https://stackoverflow.com/questions/13066532/how-to-uninstall-npm-modules-in-node-js
+
+Servicios en vue con clases js:
+https://stackoverflow.com/questions/38498427/vue-js-define-a-service
+
+Esperar que peticion Axios termine:
+https://stackoverflow.com/questions/49661209/get-response-from-axios-with-await-async
+

@@ -22,6 +22,7 @@ export default class UsuarioService {
     }*/
 
     async loginUser(nit,password) {
+
         try {
              const response = await Axios
                  .post("/usuario/login", {
@@ -36,7 +37,17 @@ export default class UsuarioService {
              return {
                  estado: 0,
                  msjErrorCustom: "El tiempo de espera para la petición llego a su limite, el servidor no responde.",
-                 msjErrorDefault: error.message
+                 msjErrorDefault: error.message,
+                 userInfo:{
+                    primerNombre:"Jose",
+                    segundoNombre:"Edgardo",
+                    tercerNombre:"",
+                    primerApellido:"Nolasco",
+                    segundoApellido:"Rodriguez",
+                    tercerApellido:"",
+                    nickName:"Jose Nolasco",
+                    token:""
+                 }
              };
          }
  

@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state:{
         verModalCargando:false,
+        userInfo:null,
         datosPrueba:{
 
         }
@@ -13,6 +14,9 @@ export default new Vuex.Store({
     mutations:{
         mostrarModalCargando(state, payload){
             state.verModalCargando=payload
+        },
+        setUserInfo(state, payload){
+            state.userInfo=payload
         }
     },
     actions:{

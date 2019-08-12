@@ -7,7 +7,7 @@
       <v-container fluid fill-height>
         <v-layout align-center justify-center row fill-height>
           <v-flex xs10 sm6 md4 lg3 xl3>
-            <v-card class="elevation-12">
+            <v-card class="elevation-12" v-on:keyup.enter="login">
               <v-toolbar dark color="primary">
                 <v-toolbar-title>Ingreso</v-toolbar-title>
               </v-toolbar>
@@ -24,6 +24,7 @@
                     v-validate="'required|length:17'"
                     :error-messages="errorsVee.collect('data.nit')"
                     required
+                    ref="inputNit"
                   ></v-text-field>
                   <v-text-field
                     label="Contraseña"
@@ -143,6 +144,7 @@ export default {
   },
   mounted() {
     this.$validator.localize("en", this.dictionary);
+    this.$refs.inputNit.focus();
   },
   methods: {
     irAresetPass: function() {
@@ -156,12 +158,16 @@ export default {
 
           usuarioServ.loginUser().then(respuesta => {
             this.$store.commit("mostrarModalCargando", false);
+            this.$store.commit("setUserInfo",respuesta.userInfo);
+            this.$router.push({ name: "Home" });
+            /*
             if (respuesta.estado == 0) {
               this.ui.verMsjErrorEnlogin = true;
               this.ui.msjError = respuesta.msjErrorCustom;
               this.ui.msjDetallesError = respuesta.msjErrorDefault;
               this.ui.verDetallesError=true;
             }
+            */
           });
 
           return;

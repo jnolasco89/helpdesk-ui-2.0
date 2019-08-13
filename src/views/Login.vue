@@ -157,8 +157,9 @@ export default {
           this.$store.commit("mostrarModalCargando", true);
 
           usuarioServ.loginUser().then(respuesta => {
-            this.$store.commit("mostrarModalCargando", false);
+            console.log(JSON.stringify(respuesta));
             this.$store.commit("setUserInfo",respuesta.userInfo);
+            this.$store.commit("mostrarModalCargando", false);
             this.$router.push({ name: "Home" });
             /*
             if (respuesta.estado == 0) {

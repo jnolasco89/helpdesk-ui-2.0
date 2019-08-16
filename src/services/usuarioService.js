@@ -20,9 +20,22 @@ export default class UsuarioService {
                 };
             });
     }*/
+    async prueba(){
+        try {
+            const response = await Axios.get("CatTemas");
+            return response;
+        }
+        catch (error) { 
+            console.log(error);
+            return {
+                estado: 0,
+                msjErrorCustom: "Ocurrio un error al realizar la petición.",
+                msjErrorDefault: error.message
+            };
+        }
+    }
 
     async loginUser(nit,password) {
-
         try {
              const response = await Axios
                  .post("/usuario/login", {
@@ -32,7 +45,6 @@ export default class UsuarioService {
              return response;
          }
          catch (error) {
-             console.log("Ocurrio un error: -----------------------")
              console.log(error);
              return {
                  estado: 0,
@@ -50,7 +62,5 @@ export default class UsuarioService {
                  }
              };
          }
- 
-           
      }
 }

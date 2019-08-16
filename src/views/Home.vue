@@ -60,7 +60,9 @@
       </v-btn>
     </v-app-bar>
 
-    <v-content></v-content>
+    <v-content>
+      <tabla-paginacion></tabla-paginacion>
+    </v-content>
 
     <dialog-cargando></dialog-cargando>
   </v-app>
@@ -68,11 +70,22 @@
 <script>
 // @ is an alias to /src
 import DialogCargando from "@/components/DialogCargando.vue";
+import TablaPaginacion from "@/components/Generales/TablaDePaginacion.vue";
 
 export default {
   name: "home",
+  components: {
+    DialogCargando,
+    TablaPaginacion
+  },
   data() {
     return {
+      config: {
+        encabezados: [
+          { key: "1", valor: 1, texto: "Encabezado1" },
+          { key: "2", valor: 2, texto: "Encabezado2" }
+        ]
+      },
       ui: {
         nickName: "Usuario",
         drawer: null,
@@ -104,9 +117,6 @@ export default {
         ]
       }
     };
-  },
-  components: {
-    DialogCargando
   },
   mounted() {
     this.armarNickName();

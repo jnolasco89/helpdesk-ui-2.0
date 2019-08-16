@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import DialogCargando from "../components/DialogCargando";
+import DialogCargando from "../components/Generales/DialogCargando";
 import UsuarioService from "../services/usuarioService";
 
 const usuarioServ = new UsuarioService();

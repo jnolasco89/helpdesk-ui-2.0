@@ -61,7 +61,7 @@
     </v-app-bar>
 
     <v-content>
-      <tabla-paginacion></tabla-paginacion>
+      <formulario-caso></formulario-caso>
     </v-content>
 
     <dialog-cargando></dialog-cargando>
@@ -69,23 +69,19 @@
 </template>
 <script>
 // @ is an alias to /src
-import DialogCargando from "@/components/DialogCargando.vue";
-import TablaPaginacion from "@/components/Generales/TablaDePaginacion.vue";
+import DialogCargando from "@/components/Generales/DialogCargando.vue";
+import CasosVistaUsuario from "@/components/CasosVistaUsuario.vue";
+import FormularioCaso from "@/components/FormularioCaso.vue"
 
 export default {
   name: "home",
   components: {
     DialogCargando,
-    TablaPaginacion
+    CasosVistaUsuario,
+    FormularioCaso
   },
   data() {
     return {
-      config: {
-        encabezados: [
-          { key: "1", valor: 1, texto: "Encabezado1" },
-          { key: "2", valor: 2, texto: "Encabezado2" }
-        ]
-      },
       ui: {
         nickName: "Usuario",
         drawer: null,

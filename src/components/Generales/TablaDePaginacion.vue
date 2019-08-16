@@ -8,6 +8,7 @@
           :options.sync="opcionesDefaultDataTable"
           :server-items-length="totalItems"
           :loading="cargando"
+          :loading-text="config.textoCargandoItems"
           hide-default-footer
           class="elevation-1"
           dense
@@ -18,7 +19,7 @@
               <v-divider class="mx-4" inset vertical></v-divider>
               <v-spacer></v-spacer>
               <v-select
-                :items="config.itemsPorPagina"
+                :items="config.opcionesItemsPorPagina"
                 label="Filas por pagina"
                 :value="opcionesDefaultDataTable.itemsPerPage"
                 @input="opcionesDefaultDataTable.itemsPerPage = parseInt($event, 10)"
@@ -30,12 +31,14 @@
                 dark
                 class="mb-2 btn-buscar"
                 small
+                @click="buscarItem"
               >{{config.botonesDeAccion.btnBuscar.texto}}</v-btn>
               <v-btn
                 color="primary"
                 dark
                 class="mb-2 btn-nuevo"
                 small
+                @click="crearItem"
               >{{config.botonesDeAccion.btnNuevo.texto}}</v-btn>
             </v-toolbar>
           </template>
@@ -82,10 +85,6 @@ config:{
 2)
 data:[{id:1,texto:"x"}]
 */
-import UsuarioService from "../../services/usuarioService";
-
-const usrServ = new UsuarioService();
-
 export default {
   name: "tablaPaginacion",
   props: {
@@ -93,55 +92,49 @@ export default {
       type: Object,
       default: function() {
         return {
-          msjSinDatos: "Sin datos encontrados.",
-          tituloTabla: "Casos",
+          msjSinDatos: "Sin datos.",
+          tituloTabla: "Items",
+          textoCargandoItems:"Cargando items...",
           filtros: [],
-          itemsPorPagina: [5, 10, 15, 20, 25, 50, 100],
-          encabezados: [
-            {
-              text: "FuenteID",
-              align: "left",
-              sortable: false,
-              value: "FuenteID"
-            },
-            { text: "FuenteDsc", value: "FuenteDsc" },
-            { text: "TemaID", value: "TemaID" },
-            { text: "TemaDsc", value: "TemaDsc" },
-            { text: "AnioMin", value: "AnioMin" },
-            { text: "AnioMax", value: "AnioMax" },
-            { text: "Acciones", value: "acciones", sortable: false }
-          ],
+          opcionesItemsPorPagina: [5,10, 25, 50, 100],
+          encabezados: [],
           botonesDeAccion: {
             btnNuevo: {
-              texto: "Crear"
+              texto: "Crear",
+              accion: function() {
+                return null;
+              }
             },
             btnBuscar: {
-              texto: "Buscar"
+              texto: "Buscar",
+              accion: function() {
+                return null;
+              }
             },
             btnEditar: {
               visible: true,
               accion: function(item) {
-                alert("EDITAR: " + JSON.stringify(item));
+                return null;
               }
             },
             btnEliminar: {
               visible: true,
               accion: function(item) {
-                alert("ELIMINAR: " + JSON.stringify(item));
+                return null;
               }
             }
           },
           funcionAjax: function() {
-            return usrServ.prueba();
+            return null;
           },
-          ajax: true,
+          ajax: false,
           datos: []
         };
       }
     }
   },
   mounted() {
-    if (this.ajax) {
+    if (this.config.ajax) {
       this.getDatosDeLaApi().then(data => {
         this.items = data.itemsApi;
         this.totalItems = data.totalItemsApi;
@@ -154,7 +147,7 @@ export default {
     return {
       totalItems: 0,
       items: [],
-      cargando: true,
+      cargando: false,
       opcionesDefaultDataTable: {},
       numeroDePaginas: 0
     };
@@ -162,7 +155,7 @@ export default {
   watch: {
     opcionesDefaultDataTable: {
       handler() {
-        if (this.ajax) {
+        if (this.config.ajax) {
           this.getDatosDeLaApi().then(data => {
             this.items = data.itemsApi;
             this.totalItems = data.totalItemsApi;
@@ -175,11 +168,25 @@ export default {
     }
   },
   methods: {
+    crearItem: function() {
+      if (this.config.botonesDeAccion.btnNuevo.accion != null) {
+        this.config.botonesDeAccion.btnNuevo.accion();
+      }
+    },
+    buscarItem: function() {
+      if (this.config.botonesDeAccion.btnBuscar.accion != null) {
+        this.config.botonesDeAccion.btnNuevo.accion();
+      }
+    },
     editarItem: function(item) {
-      this.config.botonesDeAccion.btnEditar.accion(item);
+     // if ((this.config.botonesDeAccion.btnEditar.accion(null) = !null)) {
+        this.config.botonesDeAccion.btnEditar.accion(item);
+      //}
     },
     eliminarItem: function(item) {
-      this.config.botonesDeAccion.btnEliminar.accion(item);
+      //if ((this.config.botonesDeAccion.btnEliminar.accion(null) = !null)) {
+        this.config.botonesDeAccion.btnEliminar.accion(item);
+     // }
     },
     getDatosDeLaApi: function() {
       this.cargando = true;

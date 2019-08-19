@@ -9,16 +9,57 @@
               <v-form>
                 <v-select
                   :items="ui.tiposDeCaso"
+                  item-text="texto"
+                  item-value="id"
                   label="Tipo de caso"
                   :value="ui.tipoCasoSeleccionado"
+                  return-object
+                  placeholder="Seleccione el tipo"
+                  dense
                 ></v-select>
                 <v-select
                   :items="ui.categoriasDeCaso"
-                  label="Tipo de caso"
+                  item-text="texto"
+                  item-value="id"
+                  label="Categoria"
                   :value="ui.categoriaSeleccionada"
+                  return-object
+                  placeholder="Seleccione una categoría"
+                  dense
+                ></v-select>
+                <v-select
+                  :items="ui.medios"
+                  item-text="texto"
+                  item-value="id"
+                  label="Medio"
+                  :value="ui.medioSeleccionado"
+                  return-object
+                  placeholder="Seleccione un medio"
+                  dense
                 ></v-select>
                 <v-text-field label="Titulo" v-model="modelo.caso.titulo" />
                 <v-textarea label="Descripcion" v-model="modelo.caso.descripcion" />
+                <v-combobox
+                  v-model="modelo.etiquetas"
+                  :items="ui.comboBoxEtiquetas.etiquetas"
+                  item-text="texto"
+                  item-value="id"
+                  :search-input.sync="ui.comboBoxEtiquetas.buscar"
+                  :hide-selected="ui.comboBoxEtiquetas.hideSelected"
+                  label="Etiquetas"
+                  :multiple="ui.comboBoxEtiquetas.multiple"
+                  persistent-hint
+                  :small-chips="ui.comboBoxEtiquetas.chips"
+                  :clearable="ui.comboBoxEtiquetas.clearable"
+                  return-object
+                  dense
+                ></v-combobox>
+                <v-file-input
+                v-model="ui.adjunto"
+                placeholder="Seleccione una imagen"
+                label="Imagen"
+                prepend-icon="mdi-paperclip"
+                ></v-file-input>
               </v-form>
             </v-flex>
           </v-layout>
@@ -48,13 +89,31 @@ export default {
           { id: 1, texto: "Incidencia" },
           { id: 2, texto: "Solicitud" }
         ],
-        tipoCasoSeleccionado: 1,
+        tipoCasoSeleccionado: null,
         categoriasDeCaso: [
-          { id: -1, texto: "Seleccione una categoria" },
           { id: 1, texto: "Computador" },
           { id: 2, texto: "Red" }
         ],
-        categoriaSeleccionada: -1
+        categoriaSeleccionada: null,
+        medios:[
+          {id:1,texto:"Telefonico"},
+          {id:2,texto:"Correo electrónico"},
+          {id:3,texto:"Personal"}
+        ],
+        medioSeleccionado:null,
+        comboBoxEtiquetas: {
+          etiquetas: [
+            {id:1,texto:"Tag1"},
+            {id:2,texto:"Tag2"},
+            {id:3,texto:"Tag3"}
+          ],
+          buscar: null,
+          hideSelected: true,
+          multiple: true,
+          chips: true,
+          clearable: true
+        },
+        adjunto:[]
       },
       modelo: {
         caso: {
@@ -62,7 +121,8 @@ export default {
           categoria: this.categoriaSeleccionada,
           titulo: "",
           descripcion: "",
-          adjunto: null
+          adjunto: null,
+          etiquetas: []
         }
       }
     };

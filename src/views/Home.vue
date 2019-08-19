@@ -61,7 +61,7 @@
     </v-app-bar>
 
     <v-content>
-      <formulario-caso></formulario-caso>
+      <estado-caso></estado-caso>
     </v-content>
 
     <dialog-cargando></dialog-cargando>
@@ -72,13 +72,15 @@
 import DialogCargando from "@/components/Generales/DialogCargando.vue";
 import CasosVistaUsuario from "@/components/CasosVistaUsuario.vue";
 import FormularioCaso from "@/components/FormularioCaso.vue"
+import EstadoCaso from '@/components/EstadoCaso.vue'
 
 export default {
   name: "home",
   components: {
     DialogCargando,
     CasosVistaUsuario,
-    FormularioCaso
+    FormularioCaso,
+    EstadoCaso
   },
   data() {
     return {

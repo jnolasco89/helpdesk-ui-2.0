@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-card id="lateral" flat class="elevation-5">
+    <v-card id="lateral" flat :class="config.elevacionContenedor">
       <v-card-text>
         <v-data-table
           :headers="config.encabezados"
@@ -10,7 +10,7 @@
           :loading="cargando"
           :loading-text="config.textoCargandoItems"
           hide-default-footer
-          class="elevation-1"
+          :class="config.elevacionTabla"
           dense
         >
           <template v-slot:top>
@@ -95,6 +95,8 @@ export default {
           msjSinDatos: "Sin datos.",
           tituloTabla: "Items",
           textoCargandoItems:"Cargando items...",
+          elevacionContenedor:"elevation-5",
+          elevacionTabla:"elevation-1",
           filtros: [],
           opcionesItemsPorPagina: [5,10, 25, 50, 100],
           encabezados: [],

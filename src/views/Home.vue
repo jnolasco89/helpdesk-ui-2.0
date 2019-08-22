@@ -61,7 +61,7 @@
     </v-app-bar>
 
     <v-content>
-      <estado-caso></estado-caso>
+      <articulos-soluciones></articulos-soluciones>
     </v-content>
 
     <dialog-cargando></dialog-cargando>
@@ -73,6 +73,8 @@ import DialogCargando from "@/components/Generales/DialogCargando.vue";
 import CasosVistaUsuario from "@/components/CasosVistaUsuario.vue";
 import FormularioCaso from "@/components/FormularioCaso.vue"
 import EstadoCaso from '@/components/EstadoCaso.vue'
+import ExpedienteEquipo from '@/components/ExpedienteEquipo.vue'
+import ArticulosSoluciones from '@/components/ArticulosSoluciones.vue'
 
 export default {
   name: "home",
@@ -80,7 +82,9 @@ export default {
     DialogCargando,
     CasosVistaUsuario,
     FormularioCaso,
-    EstadoCaso
+    EstadoCaso,
+    ExpedienteEquipo,
+    ArticulosSoluciones
   },
   data() {
     return {

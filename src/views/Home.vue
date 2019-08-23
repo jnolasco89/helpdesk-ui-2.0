@@ -61,7 +61,7 @@
     </v-app-bar>
 
     <v-content>
-      <articulos-soluciones></articulos-soluciones>
+      <formulario-articulo></formulario-articulo>
     </v-content>
 
     <dialog-cargando></dialog-cargando>
@@ -75,6 +75,7 @@ import FormularioCaso from "@/components/FormularioCaso.vue"
 import EstadoCaso from '@/components/EstadoCaso.vue'
 import ExpedienteEquipo from '@/components/ExpedienteEquipo.vue'
 import ArticulosSoluciones from '@/components/ArticulosSoluciones.vue'
+import FormularioArticulo from '@/components/FormularioArticulo.vue'
 
 export default {
   name: "home",
@@ -84,7 +85,8 @@ export default {
     FormularioCaso,
     EstadoCaso,
     ExpedienteEquipo,
-    ArticulosSoluciones
+    ArticulosSoluciones,
+    FormularioArticulo
   },
   data() {
     return {
@@ -121,6 +123,7 @@ export default {
     };
   },
   mounted() {
+    Notification.requestPermission().then(() => new Notification('Hola mundo!'))
     this.armarNickName();
   },
   methods: {

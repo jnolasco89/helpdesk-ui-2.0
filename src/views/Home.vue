@@ -61,7 +61,7 @@
     </v-app-bar>
 
     <v-content>
-      <formulario-articulo></formulario-articulo>
+      <router-view></router-view>
     </v-content>
 
     <dialog-cargando></dialog-cargando>
@@ -70,23 +70,11 @@
 <script>
 // @ is an alias to /src
 import DialogCargando from "@/components/Generales/DialogCargando.vue";
-import CasosVistaUsuario from "@/components/CasosVistaUsuario.vue";
-import FormularioCaso from "@/components/FormularioCaso.vue"
-import EstadoCaso from '@/components/EstadoCaso.vue'
-import ExpedienteEquipo from '@/components/ExpedienteEquipo.vue'
-import ArticulosSoluciones from '@/components/ArticulosSoluciones.vue'
-import FormularioArticulo from '@/components/FormularioArticulo.vue'
 
 export default {
   name: "home",
   components: {
-    DialogCargando,
-    CasosVistaUsuario,
-    FormularioCaso,
-    EstadoCaso,
-    ExpedienteEquipo,
-    ArticulosSoluciones,
-    FormularioArticulo
+    DialogCargando
   },
   data() {
     return {
@@ -97,26 +85,50 @@ export default {
           {
             id: 0,
             icono: "dashboard",
-            etiqueta: "Opciones",
-            ruta: "Prueba0"
+            etiqueta: "Casos",
+            ruta: "Casos"
           },
           {
             id: 1,
             icono: "settings",
-            etiqueta: "Configs",
-            ruta: "Prueba1"
+            etiqueta: "Articulos",
+            ruta: "Articulos"
           },
           {
             id: 2,
             icono: "dashboard",
-            etiqueta: "Opciones",
-            ruta: "Prueba2"
+            etiqueta: "Estado caso",
+            ruta: "EstadoCaso"
           },
           {
             id: 3,
             icono: "settings",
-            etiqueta: "Configs",
-            ruta: "Prueba3"
+            etiqueta: "Expediente equipo",
+            ruta: "ExpedienteEquipo"
+          },
+          {
+            id: 4,
+            icono: "settings",
+            etiqueta: "Form articulo",
+            ruta: "CrearArticulo"
+          },
+          {
+            id: 5,
+            icono: "settings",
+            etiqueta: "Form caso",
+            ruta: "CrearCaso"
+          },
+          {
+            id: 6,
+            icono: "settings",
+            etiqueta: "Form email conf",
+            ruta: "EmailConfig"
+          },
+          {
+            id: 7,
+            icono: "settings",
+            etiqueta: "Roles",
+            ruta: "Roles"
           }
         ]
       }
@@ -160,8 +172,8 @@ export default {
       this.$router.push({ name: rutaDestino });
     },
     navegarOpcionMenu: function(opcionMenu) {
-      alert("Navegar a: " + this.ui.itemsMenu[opcionMenu.id].ruta);
-      //this.$router.push({ name: "ConsultaMarcaciones" });
+      //alert("Navegar a: " + this.ui.itemsMenu[opcionMenu.id].ruta);
+      this.$router.push({ name: opcionMenu.ruta });
     }
   }
 };

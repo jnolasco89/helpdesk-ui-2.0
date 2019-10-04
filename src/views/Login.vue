@@ -157,9 +157,21 @@ export default {
           this.$store.commit("mostrarModalCargando", true);
 
           usuarioServ.loginUser().then(respuesta => {
-            console.log(JSON.stringify(respuesta));
-            this.$store.commit("setUserInfo",respuesta.userInfo);
+            var infoUser=respuesta.data;
+            console.log(JSON.stringify(infoUser));
+            var usuario={
+              id:infoUser.usuario.id,
+              nombre:infoUser.usuario.nombre,
+              menus:infoUser.usuario.roles[0].menus
+            }; 
+            infoUser.usuario=usuario; 
+
+            this.$store.commit("setUserInfo",infoUser);
             this.$store.commit("mostrarModalCargando", false);
+
+            localStorage.setItem("data-user", JSON.stringify(infoUser));
+            localStorage.setItem("t-a", respuesta.headers.authorization);
+
             this.$router.push({ name: "Home" });
             /*
             if (respuesta.estado == 0) {

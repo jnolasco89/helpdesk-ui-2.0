@@ -55,7 +55,7 @@
       <v-btn icon>
         <v-icon>notifications</v-icon>
       </v-btn>
-      <v-btn icon>
+      <v-btn icon @click="cerrarSesion">
         <v-icon>power_settings_new</v-icon>
       </v-btn>
     </v-app-bar>
@@ -70,6 +70,9 @@
 <script>
 // @ is an alias to /src
 import DialogCargando from "@/components/Generales/DialogCargando.vue";
+import UsuarioService from "../services/usuarioService";
+
+const usuarioServ = new UsuarioService();
 
 export default {
   name: "home",
@@ -78,77 +81,44 @@ export default {
   },
   data() {
     return {
+      model:{
+        user:null
+      },
       ui: {
         nickName: "Usuario",
         drawer: null,
-        itemsMenu: [
-          {
-            id: 0,
-            icono: "dashboard",
-            etiqueta: "Casos",
-            ruta: "Casos"
-          },
-          {
-            id: 1,
-            icono: "settings",
-            etiqueta: "Articulos",
-            ruta: "Articulos"
-          },
-          {
-            id: 2,
-            icono: "dashboard",
-            etiqueta: "Estado caso",
-            ruta: "EstadoCaso"
-          },
-          {
-            id: 3,
-            icono: "settings",
-            etiqueta: "Expediente equipo",
-            ruta: "ExpedienteEquipo"
-          },
-          {
-            id: 4,
-            icono: "settings",
-            etiqueta: "Form articulo",
-            ruta: "CrearArticulo"
-          },
-          {
-            id: 5,
-            icono: "settings",
-            etiqueta: "Form caso",
-            ruta: "CrearCaso"
-          },
-          {
-            id: 6,
-            icono: "settings",
-            etiqueta: "Form email conf",
-            ruta: "EmailConfig"
-          },
-          {
-            id: 7,
-            icono: "settings",
-            etiqueta: "Roles",
-            ruta: "Roles"
-          }
-        ]
+        itemsMenu: []
       }
     };
   },
   mounted() {
-    Notification.requestPermission().then(() => new Notification('Hola mundo!'))
+    //Notification.requestPermission().then(() => new Notification('Hola mundo!'))
+    var userInfo=JSON.parse(localStorage.getItem("data-user"));
+    this.model.user=userInfo;
+
+    this.ui.itemsMenu=[];
+    userInfo.usuario.menus.forEach(m => {
+      this.ui.itemsMenu.push({
+            id: m.id,
+            icono: m.icono,
+            etiqueta: m.nombre,
+            ruta: m.ruta
+      });
+    });
+
     this.armarNickName();
+    this.$router.push({name:this.ui.itemsMenu[0].ruta});
   },
   methods: {
     armarNickName: function() {
       let nickName = "";
-      let user = this.$store.state.userInfo;
       let nombres = [
-        user.primerNombre,
-        user.segundoNombre,
-        user.tercerNombre,
-        user.primerApellido,
-        user.segundoApellido,
-        user.tercerApellido
+        this.model.user.primerNombre,
+        this.model.user.segundoNombre,
+        this.model.user.tercerNombre,
+        this.model.user.primerApellido,
+        this.model.user.segundoApellido,
+        this.model.user.tercerApellido
       ];
 
       for (var i = 0; i < nombres.length; i++) {
@@ -174,6 +144,11 @@ export default {
     navegarOpcionMenu: function(opcionMenu) {
       //alert("Navegar a: " + this.ui.itemsMenu[opcionMenu.id].ruta);
       this.$router.push({ name: opcionMenu.ruta });
+    },
+    cerrarSesion:function(){
+      var response=usuarioServ.cerrarSesion(this.model.user.id);
+      this.$router.push({name:'Login'});
+      console.log(JSON.stringify(response));
     }
   }
 };
